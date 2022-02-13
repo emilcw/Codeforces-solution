@@ -1,59 +1,46 @@
-#include<iostream>
-#include <algorithm>
-using namespace std;
+#include <iostream>
+#include <vector>
 
-int main(){
+int main()
+{
+	int n;
+	std::cin >> n;
 
-    int n, l(1), ml(1);
-    cin >> n;
-    int profits[10000];
+	std::vector<int> earnings(n);
 
-    for (int i = 0; i < n; i++)
-    {
-        cin >> profits[i];
-        if (i > 0)
-            if (profits[i] >= profits[i - 1])
-            {
-                l++;
-                ml = max(ml, l);
-            }
-            else
-                l = 1;
-    }
+	int current_earning; //stores highest earning of non-decreasing subsegment
+	int final_count = 0; //stores length of longest non-decreasing subsegment
+	int local_count = 1; //stores length of current subsegment in process
 
-    cout << ml << endl;
+	for (int i = 0; i < n; ++i)
+	{
+		std::cin >> earnings[i];
 
-    /*
-    int n, counter = 0, biggest = 0;
-    cin >> n;
-    int arr[10000];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-    }
-    
-    for (int i = 0; i < n; i++)
-    {
-        if(i == 0){
-            counter++;
-        }else{
-            if(arr[i] >= arr[i-1]){
-                counter++;
-            }else{
-                if(counter >= biggest){
-                    biggest = counter;
-                    counter = 1;
-                }
-            }
-        }
-    }
-
-    if(counter > biggest){
-        cout << counter << endl;
-    }else{
-        cout << biggest << endl;
-    }
-    */
-
-    return 0;
+		if (i == 0)
+		{
+			current_earning = earnings[i];
+		}
+		else
+		{
+			if (earnings[i] >= current_earning)
+			{
+				local_count++;
+				current_earning = earnings[i];
+			}
+			else
+			{
+				if (local_count > final_count)
+				{
+					final_count = local_count;
+				}
+				local_count = 1;
+				current_earning = earnings[i];
+			}		
+		}
+	}
+	if (local_count > final_count)
+	{
+		final_count = local_count;
+	}
+	std::cout << final_count << "\n";
 }
