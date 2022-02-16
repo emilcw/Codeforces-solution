@@ -27,7 +27,6 @@ int main(){
                 lastDiff = diff;
             }
         }
-
     }
     
     cout << lastDiff << endl;
